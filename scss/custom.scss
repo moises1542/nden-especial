@@ -1,0 +1,412 @@
+// ==========================================================
+//  custom.scss  →  css/custom.css
+//  Componentes propios del sistema (layout, login, pedidos,
+//  cocina, caja). Usa las variables y mixins de Bootstrap.
+// ==========================================================
+
+@import "variables";
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/variables-dark";
+@import "../node_modules/bootstrap/scss/maps";
+@import "../node_modules/bootstrap/scss/mixins";
+
+// ==========================================================
+//  5. Componentes propios
+// ==========================================================
+$sidebar-width: 230px;
+$topbar-height: 56px;
+$sidebar-text: rgba(#fff, .78);
+
+// Patrón de dibujos (comida) usado en el login y en el fondo
+@mixin patron($opacidad: .07) {
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("../img/patron.svg") repeat;
+    background-size: 340px;
+    opacity: $opacidad;
+    pointer-events: none;
+  }
+}
+
+// ---------- Layout ----------
+.app { min-height: 100vh; }
+
+.sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: $sidebar-width;
+  background: $graphite;
+  color: $sidebar-text;
+  display: flex;
+  flex-direction: column;
+  z-index: $zindex-fixed;
+  transition: transform .25s ease;
+}
+
+.main {
+  margin-left: $sidebar-width;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: margin-left .25s ease;
+}
+
+.sidebar-collapsed {
+  .sidebar { transform: translateX(-100%); }
+  .main { margin-left: 0; }
+  .topbar .btn-menu-top { display: inline-flex !important; }
+}
+
+@include media-breakpoint-down(lg) {
+  .sidebar { transform: translateX(-100%); }
+  .main { margin-left: 0; }
+  .sidebar-open .sidebar { transform: translateX(0); box-shadow: $box-shadow-lg; }
+  .topbar .btn-menu-top { display: inline-flex !important; }
+}
+
+.sidebar-backdrop {
+  display: none;
+  @include media-breakpoint-down(lg) {
+    .sidebar-open & {
+      display: block;
+      position: fixed;
+      inset: 0;
+      background: rgba(#000, .45);
+      z-index: $zindex-fixed - 1;
+    }
+  }
+}
+
+// ---------- Cabecera del sidebar (≡ HONG KONG) ----------
+.sidebar-head {
+  height: $topbar-height;
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: 0 1.1rem;
+  border-bottom: 1px solid rgba(#fff, .06);
+  .brand-text { color: #fff; font-weight: 600; letter-spacing: .12em; font-size: .92rem; text-decoration: none; }
+}
+
+.btn-burger {
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 1.35rem;
+  line-height: 1;
+  padding: .2rem;
+  border-radius: $border-radius-sm;
+  &:hover { background: rgba(#fff, .1); }
+}
+
+// ---------- Menú ----------
+.sidebar-menu { flex: 1; overflow-y: auto; padding: 1rem .75rem; }
+
+.menu-title {
+  font-size: .65rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(#fff, .35);
+  padding: .9rem .75rem .35rem;
+}
+
+.menu-link {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  padding: .7rem .85rem;
+  margin-bottom: .3rem;
+  border-radius: $border-radius;
+  color: $sidebar-text;
+  text-decoration: none;
+  font-size: .86rem;
+  font-weight: 500;
+  transition: background-color .15s, color .15s;
+
+  i { font-size: 1.1rem; width: 1.2rem; text-align: center; }
+
+  &:hover { background: rgba(#fff, .06); color: #fff; }
+  &.active { background: $steel; color: #fff; box-shadow: inset 3px 0 0 #8FB3E8; }
+}
+
+.sidebar-foot {
+  padding: 1rem .75rem 1.25rem;
+  .menu-link { color: rgba(#fff, .45); margin: 0; &:hover { color: #fff; } }
+}
+
+// ---------- Barra superior ----------
+.topbar {
+  height: $topbar-height;
+  background: $navy-bar;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: $zindex-sticky;
+  box-shadow: 0 1px 0 rgba(#000, .2);
+
+  .btn-menu-top { display: none; }
+  .topbar-btn {
+    border: 0;
+    background: transparent;
+    color: rgba(#fff, .9);
+    font-size: .85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    padding: .35rem .6rem;
+    border-radius: $border-radius-sm;
+    &:hover, &.show { background: rgba(#fff, .1); color: #fff; }
+    &.dropdown-toggle::after { margin-left: .2rem; }
+    i { font-size: 1.05rem; }
+  }
+  .turno-pill { background: rgba(#fff, .12) !important; color: #fff !important; }
+}
+
+.notif-badge { font-size: .58rem; padding: .25em .45em; }
+.notif-menu { width: 320px; max-height: 380px; overflow-y: auto; }
+
+.live-dot {
+  width: 8px; height: 8px; border-radius: 50%; display: inline-block; background: $gray-500;
+  &.on { background: #4ADE80; box-shadow: 0 0 0 0 rgba(#4ADE80, .6); animation: pulse 2s infinite; }
+}
+@keyframes pulse { 70% { box-shadow: 0 0 0 7px rgba(#4ADE80, 0); } 100% { box-shadow: 0 0 0 0 rgba(#4ADE80, 0); } }
+
+// ---------- Área de contenido ----------
+.content-wrap { flex: 1; @include patron(.045); }
+.content { position: relative; padding: 1.5rem; @include media-breakpoint-up(xl) { padding: 1.75rem 2rem; } }
+
+.page-head {
+  margin-bottom: 1.25rem;
+  h1 { font-size: 1.45rem; margin: 0 0 .15rem; }
+  p { color: $gray-600; margin: 0; }
+  .breadcrumb { font-size: .75rem; }
+}
+
+// Panel blanco principal (como en las pantallas del diseño)
+.panel {
+  background: #fff;
+  border-radius: $border-radius-lg;
+  box-shadow: $box-shadow-sm;
+  border: 1px solid $card-border-color;
+}
+.card { box-shadow: $box-shadow-sm; }
+.card-header { border-bottom-color: $card-border-color; }
+
+// ---------- Inicio: tarjetas de opción ----------
+.option-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: .4rem;
+  padding: 1.75rem 1.25rem;
+  min-height: 190px;
+  background: #fff;
+  border: 1px solid $card-border-color;
+  border-radius: $border-radius-lg;
+  box-shadow: $box-shadow-sm;
+  color: $body-color;
+  text-decoration: none;
+  transition: transform .15s, box-shadow .15s, border-color .15s;
+
+  svg, .bi { width: 56px; height: 56px; font-size: 3rem; color: $navy; margin-bottom: .5rem; }
+  .title { font-weight: 600; font-size: 1rem; }
+  .desc { color: $gray-600; font-size: .8rem; max-width: 190px; }
+  &:hover { transform: translateY(-3px); box-shadow: $box-shadow; border-color: rgba($navy, .35); color: $body-color; }
+}
+
+// ---------- KPI (Ventas del día, Pendientes, Entregados) ----------
+.kpi {
+  display: flex;
+  align-items: center;
+  gap: .9rem;
+  padding: 1rem 1.15rem;
+  background: #fff;
+  border: 1px solid $card-border-color;
+  border-radius: $border-radius-lg;
+  box-shadow: $box-shadow-sm;
+  height: 100%;
+  .kpi-icon { font-size: 2rem; line-height: 1; color: $navy; }
+  .kpi-label { font-size: .78rem; color: $gray-700; }
+  .kpi-value { font-size: 1.45rem; font-weight: 700; line-height: 1.15; }
+  &.ok .kpi-icon { color: $success; }
+  &.wait .kpi-icon { color: $gray-700; }
+}
+
+// ---------- Formulario de pedido ----------
+.form-label { font-weight: 600; font-size: .78rem; color: #2B3446; margin-bottom: .3rem; }
+.total-pagar {
+  .label { font-weight: 600; font-size: .85rem; }
+  .value { font-size: 1.6rem; font-weight: 800; color: #16213A; line-height: 1.1; }
+}
+.detalle-table td, .detalle-table th { vertical-align: middle; }
+.mesa-opt-ocupada { color: $warning; }
+
+// ---------- Estados ----------
+$estados: ("Pendiente": $warning, "En-preparación": $info, "Listo": $success, "Entregado": $success, "Anulado": $danger);
+.estado {
+  display: inline-block; white-space: nowrap; font-size: .75rem; font-weight: 600;
+  @each $k, $c in $estados { &-#{$k} { color: shade-color($c, 10%); } }
+  &.pill { padding: .2em .6em; border-radius: 50rem; @each $k, $c in $estados { &.estado-#{$k} { background: rgba($c, .12); } } }
+}
+.pago-badge { font-size: .7rem; font-weight: 600; padding: .2em .55em; border-radius: 50rem;
+  &.pagado { background: rgba($success, .12); color: shade-color($success, 15%); }
+  &.porcobrar { background: rgba($danger, .1); color: $danger; } }
+
+// ---------- Tabla de ventas (caja) ----------
+.ventas-table {
+  thead th { background: #F1F3F6; color: #2B3446; font-size: .78rem; border-bottom: 0; }
+  tbody tr { cursor: pointer; }
+  tbody tr.selected > * { background: rgba($navy, .07); box-shadow: inset 0 0 0 9999px rgba($navy, .03); }
+  tbody tr.selected td:first-child { box-shadow: inset 3px 0 0 $navy; }
+}
+.caja-actions .btn { padding-top: .65rem; padding-bottom: .65rem; font-weight: 500; }
+
+// ---------- Monitor de cocina ----------
+.kitchen-board { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1rem; }
+.ticket {
+  background: #fff; border-radius: $border-radius-lg; box-shadow: $box-shadow-sm; border: 1px solid $card-border-color;
+  border-top: 4px solid $warning; display: flex; flex-direction: column;
+  &.is-cooking { border-top-color: $info; }
+  &.is-ready { border-top-color: $success; }
+  &.is-late { box-shadow: 0 0 0 2px rgba($danger, .45), $box-shadow-sm; }
+  &.is-new { animation: flash 1.2s ease 2; }
+  .ticket-head { padding: .8rem 1rem; border-bottom: 1px dashed $border-color; }
+  .ticket-body { padding: .5rem 1rem; flex: 1; }
+  .ticket-foot { padding: .7rem 1rem; border-top: 1px solid $border-color; }
+  .k-item { padding: .45rem 0; border-bottom: 1px solid $gray-100; &:last-child { border: 0; } }
+  .k-qty { font-weight: 700; font-size: 1.05rem; min-width: 2rem; }
+  .k-note { font-size: .74rem; color: shade-color($warning, 40%); background: rgba($warning, .12); border-radius: $border-radius-sm; padding: .15rem .45rem; display: inline-block; }
+  .k-item.anulado { text-decoration: line-through; opacity: .5; }
+}
+@keyframes flash { 50% { box-shadow: 0 0 0 4px rgba($navy, .4); } }
+.timer { font-variant-numeric: tabular-nums; font-size: .76rem; }
+
+// ---------- Cobro ----------
+.metodo-option {
+  .btn { display: flex; flex-direction: column; align-items: center; gap: .2rem; padding: .6rem .3rem; font-size: .78rem; }
+  .btn i { font-size: 1.3rem; }
+}
+.split-tabs { flex-wrap: nowrap; .nav-link { font-size: .78rem; padding-inline: .5rem; white-space: nowrap; } }
+.saldo-box { background: #F4F6F9; border: 1px solid $card-border-color; border-radius: $border-radius; }
+
+// ---------- Reportes ----------
+.bar-row { display: grid; grid-template-columns: 90px 1fr 90px; align-items: center; gap: .6rem; font-size: .8rem; margin-bottom: .4rem; }
+.bar-track { background: $gray-200; height: 10px; border-radius: 50rem; overflow: hidden; }
+.bar-fill { height: 100%; background: $navy; border-radius: 50rem; }
+.chart-cols { display: flex; align-items: flex-end; justify-content: center; gap: 4px; height: 160px; }
+.chart-col { flex: 1; max-width: 56px; background: rgba($navy, .8); border-radius: 4px 4px 0 0; min-height: 2px; &:hover { background: $navy; } }
+.stat-card .stat-icon { width: 46px; height: 46px; font-size: 1.3rem; display: grid; place-items: center; border-radius: $border-radius; }
+.stat-value { font-size: 1.45rem; font-weight: 700; line-height: 1.1; }
+
+// ---------- Configuración (pestañas) ----------
+.config-tabs { border-bottom: 1px solid $border-color; margin-bottom: 1.25rem;
+  .nav-link { color: $gray-600; font-weight: 500; border: 0; border-bottom: 2px solid transparent; border-radius: 0; padding: .6rem 1rem;
+    &.active { color: $navy; border-bottom-color: $navy; background: transparent; } } }
+
+// ---------- Login ----------
+.login-page {
+  min-height: 100vh;
+  background: #D9DDE3;
+  @include patron(.16);
+}
+.login-card {
+  position: relative;
+  max-width: 940px;
+  width: 100%;
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(16, 24, 40, .25);
+  background: #fff;
+}
+.login-side {
+  background:
+    radial-gradient(circle at 50% 45%, #3a3a3a 0, #151515 55%, #090909 100%);
+  min-height: 420px;
+  display: grid;
+  place-items: center;
+  padding: 2.5rem;
+  img { width: min(300px, 80%); filter: drop-shadow(0 12px 24px rgba(0, 0, 0, .6)); }
+}
+.login-form {
+  padding: 3rem 3.25rem;
+  @include media-breakpoint-down(md) { padding: 2rem 1.5rem; }
+  h1 { font-size: 1.55rem; }
+  .input-group-text { background: #fff; color: $gray-700; }
+  .form-control { border-left: 0; }
+  .input-group:focus-within .input-group-text { border-color: $input-focus-border-color; }
+}
+
+// ---------- Utilidades ----------
+.hk-compact {
+  .content { padding: 1rem; }
+  .card-body { padding: .75rem; }
+  .table > :not(caption) > * > * { padding: .35rem .5rem; }
+}
+.empty-state { color: $gray-500; text-align: center; padding: 2.5rem 1rem; i { font-size: 2rem; display: block; margin-bottom: .5rem; } }
+.toast-container { z-index: $zindex-toast; }
+.avatar {
+  width: 34px; height: 34px; flex-shrink: 0; border-radius: 50%; display: grid; place-items: center;
+  background: $navy; color: #fff; font-size: .72rem; font-weight: 600;
+  &-lg { width: 60px; height: 60px; font-size: 1.2rem; }
+}
+
+@media print {
+  .sidebar, .topbar, .no-print { display: none !important; }
+  .main { margin-left: 0 !important; }
+  .content-wrap::before { display: none; }
+  body { background: #fff; }
+  .card, .panel { box-shadow: none !important; }
+}
+
+// ---------- Perfil de usuario ----------
+.profile-banner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, $navy-bar, $navy);
+  .avatar { background: #fff; color: $navy; }
+}
+.profile-dl { dt { font-weight: 500; color: $gray-600; } dd { font-weight: 500; margin-bottom: .5rem; } }
+
+// ---------- Selección de rol en el login ----------
+.role-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: .5rem;
+  @include media-breakpoint-down(sm) { grid-template-columns: repeat(2, 1fr); } }
+.role-tile {
+  display: flex; flex-direction: column; align-items: center; gap: .3rem;
+  padding: .7rem .3rem; border: 1px solid $input-border-color; border-radius: $border-radius;
+  font-size: .74rem; font-weight: 600; color: $gray-700; cursor: pointer; text-align: center;
+  transition: border-color .15s, background-color .15s, color .15s;
+  i { font-size: 1.3rem; color: $gray-600; }
+  &:hover { border-color: $navy; }
+  .btn-check:checked + & { border-color: $navy; background: $navy; color: #fff; i { color: #fff; } }
+  .btn-check:focus-visible + & { box-shadow: 0 0 0 .2rem rgba($navy, .25); }
+}
+
+// ---------- Banda del rol en Inicio ----------
+.role-banner {
+  display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; border-radius: $border-radius-lg;
+  background: linear-gradient(135deg, $navy-bar, $navy); color: #fff;
+  .role-icon { width: 52px; height: 52px; border-radius: 50%; background: rgba(#fff, .12); display: grid; place-items: center; font-size: 1.5rem; flex-shrink: 0; }
+  ul { margin: 0; padding-left: 1.1rem; font-size: .8rem; color: rgba(#fff, .8); }
+}
+
+// ---------- Mesas ----------
+.mesa-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: .5rem; }
+.mesa {
+  border: 1px solid $input-border-color; border-radius: $border-radius; background: #fff;
+  padding: .6rem .3rem; text-align: center; font-size: .78rem; font-weight: 600; color: $gray-700;
+  i { display: block; font-size: 1.2rem; margin-bottom: .1rem; }
+  &:hover { border-color: $navy; }
+  &.ocupada { border-color: rgba($warning, .6); background: rgba($warning, .08); color: shade-color($warning, 30%); }
+  &.selected { border-color: $navy; background: $navy; color: #fff; }
+}
+.role-banner .h5 { color: #fff; }

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="360" viewBox="0 0 360 360" fill="none" stroke="#5b6573" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- tazón con palitos -->
+  <g transform="translate(20 30)"><path d="M0 20h56c0 18-12 30-28 30S0 38 0 20z"/><path d="M10 50h36"/><path d="M38 0l22 18M44 -2l20 16"/><path d="M14 14c2-4 6-4 8 0M28 14c2-4 6-4 8 0"/></g>
+  <!-- pescado -->
+  <g transform="translate(200 24)"><path d="M0 20c18-22 52-22 70 0-18 22-52 22-70 0z"/><path d="M70 20l18-14v28z"/><circle cx="16" cy="16" r="2.5"/><path d="M34 8c4 8 4 16 0 24"/></g>
+  <!-- limón -->
+  <g transform="translate(120 120)"><circle cx="24" cy="24" r="22"/><circle cx="24" cy="24" r="15"/><path d="M24 9v30M9 24h30M13 13l22 22M35 13L13 35"/></g>
+  <!-- tenedor y cuchillo -->
+  <g transform="translate(28 150)"><path d="M6 0v18c0 6 6 6 6 0V0M12 0v18M18 0v18c0 6-6 6-6 0M12 24v40"/><path d="M40 0c10 6 10 26 0 34v30"/></g>
+  <!-- tetera -->
+  <g transform="translate(250 140)"><path d="M10 20h44l-4 34H14z"/><path d="M54 26c12 0 12 18 0 18"/><path d="M10 28C0 26-4 14 0 8"/><path d="M22 20c0-8 20-8 20 0"/><circle cx="32" cy="10" r="3"/></g>
+  <!-- camarón -->
+  <g transform="translate(110 250)"><path d="M10 40C-4 20 10 0 34 4c18 3 24 20 14 30-8 8-20 6-24-2"/><path d="M18 12l-6-10M26 8l-2-12M48 34l14 10M48 34l16 0"/><circle cx="36" cy="14" r="2"/></g>
+  <!-- ají -->
+  <g transform="translate(250 270)"><path d="M8 8c30 0 50 20 52 46C40 46 14 36 8 8z"/><path d="M8 8C6 2 10-2 16 0"/></g>
+  <!-- plato con campana -->
+  <g transform="translate(20 280)"><path d="M0 40h60"/><path d="M6 38c0-16 10-26 24-26s24 10 24 26"/><circle cx="30" cy="8" r="3"/></g>
+  <!-- olla -->
+  <g transform="translate(160 20)"><path d="M0 20h36v22c0 4-4 8-8 8H8c-4 0-8-4-8-8z"/><path d="M-6 24h6M36 24h6M8 14h20"/><path d="M12 6c0-4 4-4 4 0M22 6c0-4 4-4 4 0"/></g>
+</svg>
