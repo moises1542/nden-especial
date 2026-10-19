@@ -1,0 +1,8 @@
+// ==========================================================
+//  bootstrap.scss  →  css/bootstrap.css
+//  Bootstrap 5 personalizado: primero nuestras variables y
+//  después el código fuente de Bootstrap (respeta los !default).
+// ==========================================================
+
+@import "variables";
+@import "../node_modules/bootstrap/scss/bootstrap";

@@ -1,0 +1,53 @@
+// ==========================================================
+//  _variables.scss — Identidad visual del Restaurante Hong Kong
+//  Archivo parcial (empieza con _): no se compila solo, lo usan
+//  bootstrap.scss y custom.scss. Cambia aquí colores, fuente y bordes.
+// ==========================================================
+
+// ---------- 1. Paleta ----------
+$navy:      #1F3557;   // azul marino institucional (botones)
+$navy-bar:  #1E2B42;   // barra superior
+$graphite:  #1C2029;   // sidebar
+$steel:     #2C3B55;   // opción activa del menú
+
+$primary:   $navy;
+$secondary: #6C7686;   // botones grises (Imprimir / Actualizar)
+$success:   #2E9C5A;   // Entregado / pagado
+$warning:   #E08A1E;   // Pendiente
+$info:      #2F74C0;   // En preparación
+$danger:    #C8352E;
+$dark:      $graphite;
+$light:     #F4F5F7;
+
+$body-bg:    #ECEEF1;  // fondo del área de contenido
+$body-color: #1D2433;
+
+// ---------- 2. Tipografía ----------
+$font-family-sans-serif: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+$font-size-base: .875rem;
+$headings-font-weight: 700;
+$headings-color: #16213A;
+
+// ---------- 3. Formas y superficies ----------
+$border-radius:    .5rem;
+$border-radius-sm: .375rem;
+$border-radius-lg: .75rem;
+$border-color:     #DDE1E7;
+
+$white-surface: #FFFFFF;
+$card-bg: $white-surface;
+$card-cap-bg: $white-surface;
+$card-border-color: #E3E6EB;
+$input-bg: $white-surface;
+$input-border-color: #CDD3DC;
+$input-disabled-bg: #EEF0F3;
+$input-focus-border-color: rgba($navy, .55);
+$dropdown-bg: $white-surface;
+$modal-content-bg: $white-surface;
+$list-group-bg: $white-surface;
+$toast-background-color: $white-surface;
+$box-shadow-sm: 0 1px 2px rgba(16, 24, 40, .06), 0 1px 3px rgba(16, 24, 40, .08);
+$table-cell-padding-y: .65rem;
+$table-th-font-weight: 600;
+$btn-font-weight: 500;
+$breadcrumb-divider: quote("›");
